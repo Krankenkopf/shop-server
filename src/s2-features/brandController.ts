@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
-import { ProductBrand } from "../../models";
-import ApiError from "../../../s3-utils/apiError";
+import { ProductBrand } from "./models";
+import ApiError from "../s3-utils/apiError";
 
 class BrandController {
     async create(req: Request, res: Response, next: NextFunction) {

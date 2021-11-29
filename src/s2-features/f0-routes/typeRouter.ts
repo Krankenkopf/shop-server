@@ -1,5 +1,5 @@
 import { Router } from "express"
-import typeController from "../../s2-features/f1-auth/a1-controllers/typeController"
+import typeController from "../typeController"
 import { accessLevelChecker } from "../../s4-middleware/accessLevelCheckerMdw"
 import { authHandler } from "../../s4-middleware/authHandlerMdw"
 

@@ -1,8 +1,8 @@
 import { Router } from "express"
-import { brandRouter } from "../s1-main/routes/brandRouter"
+import { brandRouter } from "./f0-routes/brandRouter"
 import { userRouter } from "./f2-user/userRouter"
-import { productRouter } from "../s1-main/routes/productRouter"
-import { typeRouter } from "../s1-main/routes/typeRouter"
+import { productRouter } from "./f0-routes/productRouter"
+import { typeRouter } from "./f0-routes/typeRouter"
 import { authRouter } from "./f1-auth/authRouter"
 
 export const router = Router()

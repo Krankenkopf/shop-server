@@ -1,6 +1,6 @@
-import { ProductType } from '../../models';
+import { ProductType } from './models';
 import {Request, Response, NextFunction} from "express";
-import ApiError from "../../../s3-utils/apiError"
+import ApiError from "../s3-utils/apiError"
 
 class TypeController {
     async create(req: Request, res: Response, next: NextFunction) {

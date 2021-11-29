@@ -1,9 +1,9 @@
-import { ProductInfo, ProductType } from '../../models';
-import ApiError from './../../../s3-utils/apiError';
+import { ProductInfo, ProductType } from './models';
+import ApiError from '../s3-utils/apiError';
 import { NextFunction, Request, Response } from "express";
 import path from "path";
-import { v4 } from "uuid"
-import { ProductItem } from "../../models";
+import { v4 as uuidV4}  from "uuid"
+import { ProductItem } from "./models";
 import { Model, ModelCtor } from 'sequelize/types';
 
 type TUploadedImg = {
@@ -36,9 +36,9 @@ class ProductController {
             let { info } = req.body
             if (req.files) {
                 const { img } = req.files as unknown as TUploadedImg // TODO: questionable typing
-                const imgName = `${v4()}.jpg`
+                const imgName = `${uuidV4()}.jpg`
                 img.mv(path.resolve(__dirname, "..", "..", "..", "..", "static", "images", imgName))
-                const product: any = await ProductItem.create(
+                const product: any = await ProductItem.create(  // TODO: fix any
                     { name, price, productBrandId, productTypeId, img: imgName }
                 )
                 if (info) {
