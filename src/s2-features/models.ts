@@ -1,14 +1,8 @@
-import { DataTypes } from "sequelize/types"
+import { Token } from './f1-auth/a1-models/tokenModel';
+import { DataTypes } from "sequelize"
 import sequelize from "../s1-main/dbInit"
-import { User } from "./f2-user/u2-models/userModel"
-
-export const Cart = sequelize.define("cart", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-})
-
-export const CartItem = sequelize.define("cart_item", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-})
+import { User } from "./f2-user/u1-models/userModel"
+import { Cart, CartItem, UnauthCart, UnauthCartItem } from './f3-cart/c1-models/cartModel';
 
 export const ProductItem = sequelize.define("product_item", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -49,8 +43,14 @@ Cart.belongsTo(User)
 User.hasMany(Rating)
 Rating.belongsTo(User)
 
+User.hasOne(Token)
+Token.belongsTo(User)
+
 Cart.hasMany(CartItem)
 CartItem.belongsTo(Cart)
+
+UnauthCart.hasMany(UnauthCartItem)
+UnauthCartItem.belongsTo(UnauthCart)
  
 ProductType.hasMany(ProductItem)
 ProductItem.belongsTo(ProductType)
