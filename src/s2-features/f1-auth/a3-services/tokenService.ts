@@ -14,7 +14,7 @@ class TokenService {
         const accessToken = jsonwebtoken.sign(
             userData,
             process.env.JWT_ACCESS_SECRET as Secret,
-            { expiresIn: 1800 }//1800sec
+            { expiresIn: 60 }//1800sec
         )
         const refreshToken = jsonwebtoken.sign(
             userData,
@@ -31,7 +31,18 @@ class TokenService {
             return await token.save()
         }
         return await Token.create({userId, refreshToken})
+    }
 
+    async findRefreshTokenById(userId: number) {
+        return await Token.findOne<TokenInstance>({ where: { userId } })
+    }
+
+    async findRefreshTokenByToken(refreshToken: string) {
+        return await Token.findOne<TokenInstance>({ where: { refreshToken } })
+    }
+
+    async deleteRefreshToken(userId: string) {
+        await Token.destroy({where: {userId}})
     }
 }
 

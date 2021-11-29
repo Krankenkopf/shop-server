@@ -8,29 +8,27 @@ export const authHandler = (req: Request, res: Response, next: NextFunction) => 
     try {
         const token = req.headers.authorization?.split(' ')[1]
         const unauthId = req.cookies.unauthId
-        
-        
         if (!token && !unauthId) {
             res.locals.unauthId = uuidV4()
-            res.locals.jwt = { id: res.locals.unauthId, email: "unauth", accessLevel: 0, isActivated: false }
-            next()
-        } else if (!token) {
+            res.locals.jwtData = { id: res.locals.unauthId, email: "unauth", accessLevel: 0, isActivated: false }
+            return next()
+        }
+        if (!token) {
             res.locals.unauthId = unauthId
-            res.locals.jwt = { id: unauthId, email: "unauth", accessLevel: 0, isActivated: false }
-            next()
-        } else {
+            res.locals.jwtData = { id: unauthId, email: "unauth", accessLevel: 0, isActivated: false }
+            return next()
+        }
+        if (token) {
             try {
                 const decodedData = jsonwebtoken.verify(token, process.env.JWT_ACCESS_SECRET as Secret)
-                console.log("this ", decodedData);
-                res.locals.jwt = decodedData
-                next()
+                res.locals.jwt = token
+                res.locals.jwtData = decodedData
+                return next()
             } catch (error) {
-                res.locals.unauthId = unauthId ?? uuidV4()
-                res.locals.jwt = { id: res.locals.unauthId, email: "unauth", accessLevel: 0, isActivated: false }
-                next()
+                return next(ApiError.unauthorized("Token is expired or corrupted"))
             }
         }
     } catch (error) {
-        next(ApiError.unauthorized("Unauthenticated"))
+        return next(ApiError.unauthorized("Unauthenticated"))
     }
 }
