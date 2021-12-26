@@ -1,4 +1,4 @@
-import { Token } from './f1-auth/a1-models/tokenModel';
+import {Token} from './f1-auth/a1-models/tokenModel';
 import { DataTypes } from "sequelize"
 import sequelize from "../s1-main/dbInit"
 import { User } from "./f2-user/u1-models/userModel"
@@ -12,12 +12,12 @@ export const ProductItem = sequelize.define("product_item", {
     img: { type: DataTypes.STRING, allowNull: false },
 })
 
-export const ProductType = sequelize.define("product_type", {
+/* export const ProductType = sequelize.define("product_type", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, unique: true, allowNull: false },
-})
+}) */
 
-export const ProductBrand = sequelize.define("product_brand", {
+/* export const ProductBrand = sequelize.define("product_brand", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, unique: true, allowNull: false },
 })
@@ -31,28 +31,52 @@ export const ProductInfo = sequelize.define("product_info", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: { type: DataTypes.STRING, allowNull: false },
     description: { type: DataTypes.TEXT, allowNull: false}
-})
+}) */
 
-export const ProductTypeBrand = sequelize.define("type_brand", {
+/* export const ProductTypeBrand = sequelize.define("type_brand", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+}) */
+
+User.hasOne(Cart, {
+    sourceKey: 'id',
+    foreignKey: 'userId',
+    as: 'cart',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
 })
+Cart.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' })
 
-User.hasOne(Cart)
-Cart.belongsTo(User)
+/* User.hasMany(Rating)
+Rating.belongsTo(User) */
 
-User.hasMany(Rating)
-Rating.belongsTo(User)
-
-User.hasOne(Token)
-Token.belongsTo(User)
-
-Cart.hasMany(CartItem)
-CartItem.belongsTo(Cart)
-
-UnauthCart.hasMany(UnauthCartItem)
-UnauthCartItem.belongsTo(UnauthCart)
+User.hasOne(Token, {
+    sourceKey: 'id',
+    foreignKey: 'userId',
+    as: 'token',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+})
+Token.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' })
  
-ProductType.hasMany(ProductItem)
+Cart.hasMany(CartItem, {
+    sourceKey: 'id',
+    foreignKey: 'cartId',
+    as: 'cartItem',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+})
+CartItem.belongsTo(Cart, { foreignKey: 'cartId', targetKey: 'id' })
+
+UnauthCart.hasMany(UnauthCartItem, {
+    sourceKey: 'id',
+    foreignKey: 'cartId',
+    as: 'cartItem',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+})
+UnauthCartItem.belongsTo(UnauthCart, { foreignKey: 'cartId', targetKey: 'id' })
+
+/* ProductType.hasMany(ProductItem)
 ProductItem.belongsTo(ProductType)
 
 ProductBrand.hasMany(ProductItem)
@@ -68,4 +92,4 @@ ProductItem.hasMany(ProductInfo, {as: 'info'})
 ProductInfo.belongsTo(ProductItem)
 
 ProductType.belongsToMany(ProductBrand, {through: ProductTypeBrand})
-ProductBrand.belongsToMany(ProductType, {through: ProductTypeBrand})
+ProductBrand.belongsToMany(ProductType, {through: ProductTypeBrand}) */
