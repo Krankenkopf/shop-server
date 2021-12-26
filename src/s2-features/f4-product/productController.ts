@@ -1,9 +1,9 @@
-import { ProductInfo, ProductType } from './models';
-import ApiError from '../s3-utils/apiError';
+//import { ProductInfo, ProductType } from './models';
+import ApiError from '../../s3-utils/apiError';
 import { NextFunction, Request, Response } from "express";
 import path from "path";
 import { v4 as uuidV4}  from "uuid"
-import { ProductItem } from "./models";
+import { ProductItem } from "../models";
 import { Model, ModelCtor } from 'sequelize/types';
 
 type TUploadedImg = {
@@ -41,7 +41,7 @@ class ProductController {
                 const product: any = await ProductItem.create(  // TODO: fix any
                     { name, price, productBrandId, productTypeId, img: imgName }
                 )
-                if (info) {
+               /*  if (info) {
                     info = JSON.parse(info)
                     info.forEach((i: any) => {
                         ProductInfo.create({
@@ -52,7 +52,7 @@ class ProductController {
                         )
                     })
 
-                }
+                } */
                 return res.json(product)
             }
             return res.json({ message: "smth fckd" })
@@ -75,7 +75,7 @@ class ProductController {
             const { id } = req.params
             const product = await ProductItem.findOne({
                 where: { id },
-                include: [{ model: ProductInfo, as: "info" }]
+                //include: [{ model: ProductInfo, as: "info" }]
             }).catch(e => res.json(e))
             res.json(product)
         } catch (error) {

@@ -17,11 +17,11 @@ class UserController {
         }
         const passHashed = await bcrypt.hash(password, 2)
         const user = await User.create({ email, password: passHashed })
-        const cart = await Cart.create({ userId: user.id })
+        await Cart.create({userId: user.id})
         const addedUser = { id: user.id, email: user.email, accessLevel: user.accessLevel, isActivated: user.isActivated}
         const tokens = tokenService.generateJwt(addedUser)
         await tokenService.saveRefreshToken(addedUser.id, tokens.refreshToken)
-        return res.json({ data: { ...addedUser, ...tokens }, info: [] })
+        return res.json({ data: { ...addedUser }, auth: {...tokens}, info: [] })
     }
 
     async delete(req: Request, res: Response, next: NextFunction) {

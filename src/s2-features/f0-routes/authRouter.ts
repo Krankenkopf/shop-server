@@ -1,6 +1,6 @@
 import { authHandler } from '../../s4-middleware/authHandlerMdw';
 import { Router } from "express"
-import authController from "./a2-controllers/authController"
+import authController from "../f1-auth/a2-controllers/authController"
 
 export const authRouter = Router()
 
