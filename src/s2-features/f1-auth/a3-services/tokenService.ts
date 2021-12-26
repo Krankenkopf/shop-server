@@ -1,4 +1,5 @@
-import { Token, TokenInstance } from './../a1-models/tokenModel';
+//import  {Token, TokenInstance } from './../a1-models/tokenModel';
+import {Token} from './../a1-models/tokenModel';
 import jsonwebtoken, { Secret } from "jsonwebtoken"
 import { AccessLevel } from "../../f2-user/u1-models/userModel"
 
@@ -25,20 +26,20 @@ class TokenService {
     }
 
     async saveRefreshToken(userId: number, refreshToken: string) {
-        let token = await Token.findOne<TokenInstance>({ where: { userId } })
+        let token = await Token.findOne({ where: { userId } })
         if (token) {
             token.refreshToken = refreshToken
             return await token.save()
         }
-        return await Token.create({userId, refreshToken})
+        return await Token.create({refreshToken, userId })
     }
 
     async findRefreshTokenById(userId: number) {
-        return await Token.findOne<TokenInstance>({ where: { userId } })
+        return await Token.findOne({ where: { userId } })
     }
 
     async findRefreshTokenByToken(refreshToken: string) {
-        return await Token.findOne<TokenInstance>({ where: { refreshToken } })
+        return await Token.findOne({ where: { refreshToken } })
     }
 
     async deleteRefreshToken(userId: string) {

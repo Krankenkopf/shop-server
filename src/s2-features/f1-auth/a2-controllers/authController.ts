@@ -87,6 +87,7 @@ class AuthController {
                     const decodedData = tokenInstance && jsonwebtoken.verify(tokenInstance.refreshToken, process.env.JWT_REFRESH_SECRET as Secret)
                     const {id, email, accessLevel, isActivated} = decodedData as TUserJwtData
                     const tokens = tokenService.generateJwt({ id, email, accessLevel, isActivated })
+                    await tokenService.saveRefreshToken(id, tokens.refreshToken)
                     return resClearCookie(res, "unauthId")
                         .json({
                             data: { id, email, accessLevel, isActivated },

@@ -4,7 +4,7 @@ import sequelize from "./s1-main/dbInit"
 import cors from "cors"
 import fileUpload from "express-fileupload"
 import path from "path"
-import { router } from "./s2-features/index"
+import { router } from "./s2-features/f0-routes/index"
 import {errorHandler} from "./s4-middleware/errorHanderMdw"
 import cookieParser from "cookie-parser"
 
