@@ -15,7 +15,6 @@ const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         // if(whitelist.includes(origin || ""))
         //     return callback(null, true)
-        //;ppppl
         // callback(new Error('Not allowed by CORS'));
         console.log("origin: ", origin);
         callback(null, true); // everyone is allowed
