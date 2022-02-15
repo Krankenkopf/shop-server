@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-export const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialectOptions: {
         ssl: {
             require: true,
@@ -9,6 +9,8 @@ export const sequelize = new Sequelize(process.env.DATABASE_URL, {
     }
 }
 )
+
+export default sequelize
 
 /* export default new Sequelize(
     process.env.DB_NAME,

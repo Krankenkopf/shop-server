@@ -76,7 +76,7 @@ class ProductController {
             const product = await ProductItem.findOne({
                 where: { id },
                 //include: [{ model: ProductInfo, as: "info" }]
-            }).catch(e => res.json(e))
+            }).catch((e: unknown) => res.json(e))
             res.json(product)
         } catch (error) {
             next(ApiError.serverError("Smthfckd"))
