@@ -1,12 +1,22 @@
-import { Sequelize } from "sequelize"
+import { Sequelize } from 'sequelize';
 
-export default new Sequelize(
-    process.env.DB_NAME as string,
-    process.env.DB_USER as string,
+export default new Sequelize(process.env.DATABASE_URL, {
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
+}
+)
+
+/* export default new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
     process.env.DB_PASSWORD,
     {
         dialect: 'postgres',
         host: process.env.DB_HOST,
         port: Number(process.env.DB_PORT)
     }
-)
+) */
