@@ -1,6 +1,6 @@
 require("dotenv").config() // first line!
 import express, { NextFunction, Request, Response } from "express"
-import sequelize from "./s1-main/dbInit"
+import { sequelize } from "./s1-main/dbInit"
 import cors from "cors"
 import fileUpload from "express-fileupload"
 import path from "path"
